@@ -1,0 +1,77 @@
+//Baremetal Led Program
+
+#include <stdint.h>
+
+//for PC6 LED1
+
+/*
+ *	Steps for turning ON an output
+ * ->
+ *
+ *
+ *
+ *
+ * */
+
+/*
+ * MODER -> used define input/output/af mode/ analog
+ * OTYPER ->push-pull/open drain
+ * OSPEEDR ->used set max freq. at which output can work
+ * PUPDR -> used to enable pullup/pull down resistors
+ * IDR -> to read input value
+ * ODR -> to set output data
+ * BSSR -> bit addressable output register
+ * LCKR -> used to lock configuration of GPIO
+ * AFRL/AFRH->
+ *
+ *
+ * */
+
+#define GPIOC_BASE 0x40020800
+#define GPIOB_BASE 0x40020400
+#define RCC_BASE 0x40023800
+
+#define MODER_offset 0x00
+#define ODR_offset 0x14
+#define AHB1ENR_offset 0x30
+#define BSRR_offset 0x18
+
+#define delay_time 1000000
+
+int main(void) {
+
+	//gpioc enable
+	*((uint32_t*) (RCC_BASE + AHB1ENR_offset)) |= (1 << 2);
+
+	//PC6 moder set as output
+
+	//pc6
+	*((uint32_t*) (GPIOC_BASE + MODER_offset)) |= (1 << 12);
+
+	//pb13 and pb14
+	*((uint32_t*) (GPIOB_BASE + MODER_offset)) |= (1 << 26)| (1 << 28);
+	//*((uint32_t*) (GPIOB_BASE + MODER_offset)) |= (1 << 28);
+
+
+//	//writing 0 in GPIOC pin 6
+//	*((uint32_t*)(GPIOC_BASE+ODR_offset)) &= ~(1<<6);
+
+	while (1) {
+
+		// setting output PC6
+		*((uint32_t*) (GPIOC_BASE + BSRR_offset)) = (1 << 6);
+
+		//software delay
+		for (uint32_t i = 0; i < delay_time; i++) {
+		}
+
+		// resetting output PC6
+		*((uint32_t*) (GPIOC_BASE + BSRR_offset)) = (1 << 22);
+
+		//software delay
+		for (uint32_t i = 0; i < delay_time; i++) {
+		}
+
+	}
+
+}
