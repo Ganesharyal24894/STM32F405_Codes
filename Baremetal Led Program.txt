@@ -18,7 +18,7 @@
  *  	(GPIOC in our case since LED is connected to PC6 which means PortC_6th pin)
  *
  * ->To enable this port go to AHB1ENR register since GPIOC port is connected to AHB bus
- *  	(AHB1ENR stands for AHB1 Enable Register all the peripherals connected to this port will be enabled from this register)
+ *  	(AHB1ENR stands for AHB1 Enable Register all the peripherals connected to this bus will be enabled from this register)
  *
  * ->Next set this pin to be an Output mode by default it will be in reset state which is Input mode
  *	(we can do this by setting MODER register inside GPOIC section)
