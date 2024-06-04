@@ -49,25 +49,25 @@
 #define GPIOB_BASE 0x40020400
 #define RCC_BASE 0x40023800
 
-#define MODER_offset 0x00
-#define ODR_offset 0x14
-#define AHB1ENR_offset 0x30
-#define BSRR_offset 0x18
+#define MODER_OFFSET 0x00
+#define ODR_OFFSET 0x14
+#define AHB1ENR_OFFSET 0x30
+#define BSRR_OFFSET 0x18
 
 #define delay_time 1000000
 
 int main(void) {
 
 	//gpioc enable
-	*((uint32_t*) (RCC_BASE + AHB1ENR_offset)) |= (1 << 2);
+	*((uint32_t*) (RCC_BASE + AHB1ENR_OFFSET)) |= (1 << 2);
 
 	//PC6 moder set as output
 
 	//pc6
-	*((uint32_t*) (GPIOC_BASE + MODER_offset)) |= (1 << 12);
+	*((uint32_t*) (GPIOC_BASE + MODER_OFFSET)) |= (1 << 12);
 
 	//writing 0 in GPIOC pin 6 to turn ON LED
-	*((uint32_t*) (GPIOC_BASE + ODR_offset)) &= ~(1 << 6);
+	*((uint32_t*) (GPIOC_BASE + ODR_OFFSET)) &= ~(1 << 6);
 
 	while (1) {
 
